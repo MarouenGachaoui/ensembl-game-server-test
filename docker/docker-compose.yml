@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+  ensembl-game-server-test-web:
+    build: ./web
+    image: ensembl-game-server-test-web
+    ports:
+        - "8001:80"
+    volumes:
+        - "${ROOT_PATH}/ensembl-game-server-test/app:/app"
+    networks:
+      bridge_net:
+        ipv4_address: 10.2.1.2
+        aliases:
+            - ensembl-game-server-test.loc
+    extra_hosts:
+      - "ensembl-game-server-test.loc:127.0.0.1"
+  ensembl-game-server-test-redis:
+    build: ./redis
+    image: ensembl-game-server-test-redis
+    networks:
+      bridge_net:
+        ipv4_address: 10.2.1.3
+        aliases:
+            - redis.loc
+    
+networks:
+  bridge_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.2.1.0/24
+          gateway: 10.2.1.1

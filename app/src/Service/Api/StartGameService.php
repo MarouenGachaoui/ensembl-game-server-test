@@ -40,7 +40,7 @@ class StartGameService extends BaseGameService
         $target = $this->createNewTarget($shooter);
         $this->mapService->saveTheMap(new Map($shooter, $target, $this->numberOfSidePositions));
 
-        return new JsonResponse('Game started', Response::HTTP_CREATED);
+        return $this->renderResponse('Game started', Response::HTTP_CREATED);
     }
 
     /**

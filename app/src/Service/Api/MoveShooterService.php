@@ -7,9 +7,8 @@ namespace App\Service\Api;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
-class MoveShooterService extends BaseGameService
+class MoveShooterService extends BaseGameActionService
 {
     /**
      * Move the shooter depending on the requested action.
@@ -26,21 +25,19 @@ class MoveShooterService extends BaseGameService
         $action = $content["action"] ?? null;
 
         if (!$action) {
-            throw new BadRequestHttpException('Action is required');
+            $this->renderBadRequest('Action is required');
         }
 
-        $map = $this->mapService->getMap();
-        $shooter = $map->getShooter();
-        $target = $map->getTarget();
+        $this->init();
 
-        if ($shooter->move($action, $target, $map->getNumberOfSidePositions())) {
+        if ($this->shooter->move($action, $this->target, $this->map->getNumberOfSidePositions())) {
             // Save the map only if the shooter's position changed
-            $this->mapService->saveTheMap($map);
+            $this->mapService->saveTheMap($this->map);
         }
 
-        return new JsonResponse([
-            'position' => $shooter->getPositionAsArray(),
-            'target' => $shooter->isTheTargetVisible($target) ? $target->getPositionAsArray() : null
+        return $this->renderResponse([
+            'position' => $this->shooter->getPositionAsArray(),
+            'target' => $this->shooter->isTheTargetVisible($this->target) ? $this->target->getPositionAsArray() : null
         ], Response::HTTP_CREATED);
     }
 }

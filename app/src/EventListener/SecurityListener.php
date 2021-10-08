@@ -44,10 +44,10 @@ class SecurityListener extends BaseGameService
 
         // No map => render 404
         if ($map === null) {
-            throw new NotFoundHttpException('No game was found for this user');
+            $this->renderNotFound('No game was found for this user');
         } elseif ($map->getTarget()->getNumberOfHits() === $this->maxHitsToFishTheGame) {
             // Game is finished => render 400
-            throw new BadRequestHttpException('You are not able to apply this action because the game is finished');
+            $this->renderBadRequest('You are not able to apply this action because the game is finished');
         }
     }
 }

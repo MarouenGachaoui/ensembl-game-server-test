@@ -4,6 +4,11 @@ namespace App\Entity;
 
 abstract class Player
 {
+    public const MOVE_UP = 'up';
+    public const MOVE_DOWN = 'down';
+    public const MOVE_LEFT = 'left';
+    public const MOVE_RIGHT = 'right';
+
     /**
      * @var int [the x side position of the player]
      */
@@ -67,14 +72,69 @@ abstract class Player
     }
 
     /**
-     * Check the position with another player and return it's the same.
+     * Check the position with another one and return if it's the same.
      *
-     * @param Player $player
+     * @param int $x
+     * @param int $y
      *
      * @return bool
      */
-    public function isSamePosition(Player $player): bool
+    public function isSamePosition(int $x, int $y): bool
     {
-        return $this->x === $player->getX() && $this->y === $player->getY();
+        return $this->x === $x && $this->y === $y;
+    }
+
+    /**
+     * Move the player by one position.
+     * Do not move if the next position:
+     *  - is outside the limit
+     *  - corresponds to the position of the other player
+     *
+     * @param string $action
+     * @param Player $player
+     * @param int $limit
+     *
+     * @return bool
+     */
+    public function move(string $action, Player $player, int $limit): bool
+    {
+        $x = $this->x;
+        $y = $this->y;
+
+        switch ($action) {
+            case self::MOVE_UP:
+                $y --;
+                break;
+            case self::MOVE_DOWN:
+                $y ++;
+                break;
+            case self::MOVE_LEFT:
+                $x --;
+                break;
+            case self::MOVE_RIGHT:
+                $x ++;
+                break;
+            default:
+                break;
+        }
+
+        if ($x > $limit || $y > $limit || $x < 1 || $y < 1 || $player->isSamePosition($x, $y)) {
+            return false;
+        }
+
+        $this->x = $x;
+        $this->y = $y;
+
+        return true;
+    }
+
+    /**
+     * Render the position as array.
+     *
+     * @return int[]
+     */
+    public function getPositionAsArray(): array
+    {
+        return ['x' => $this->getX(), 'y' => $this->getY()];
     }
 }

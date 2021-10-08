@@ -2,3 +2,7 @@ start:
   path: /start
   controller: App\Controller\Api\StartGameController:start
   methods: POST
+move:
+  path: /move
+  controller: App\Controller\Api\MoveShooterController:move
+  methods: POST

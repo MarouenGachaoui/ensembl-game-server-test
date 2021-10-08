@@ -30,12 +30,18 @@ class RedisClientService
      * @param string $key
      * @param string $value
      * @param int|null $ttl
+     *
+     * @return bool
      */
-    public function setValue(string $key, string $value, ?int $ttl = null): void
+    public function setValue(string $key, string $value, ?int $ttl = null): bool
     {
         if ($this->client) {
-            $this->client->set($key, $value, $ttl);
+           $ttl ? $this->client->setex($key, $ttl, $value) : $this->client->set($key, $value);
+
+            return true;
         }
+
+        return false;
     }
 
     /**

@@ -26,3 +26,6 @@ services:
     App\Service\RedisClientService:
         bind:
             $redisUrl: '%env(APP_REDIS_URL)%'
+    App\Service\Api\MapService:
+        bind:
+            $expirationTtl: '%env(APP_REDIS_MAP_STATE_TTL)%'

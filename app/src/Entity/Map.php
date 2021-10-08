@@ -27,7 +27,7 @@ class Map
     /**
      * @return int
      */
-    public function getNumberOfPositions(): int
+    public function getNumberOfSidePositions(): int
     {
         return $this->numberOfSidePositions;
     }

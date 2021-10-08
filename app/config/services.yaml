@@ -47,3 +47,6 @@ services:
             $maxHitsToFishTheGame: '%env(APP_MAP_NB_HITS_TO_FINISH)%'
         tags:
             - { name: kernel.event_listener, event: kernel.request }
+    App\EventListener\ExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception }

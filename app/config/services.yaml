@@ -26,6 +26,11 @@ services:
     App\Service\RedisClientService:
         bind:
             $redisUrl: '%env(APP_REDIS_URL)%'
+    App\EventListener\SecurityListener:
+        bind:
+            $maxHitsToFishTheGame: '%env(APP_MAP_NB_HITS_TO_FINISH)%'
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }
     App\Service\Api\MapService:
         bind:
             $expirationTtl: '%env(APP_REDIS_MAP_STATE_TTL)%'

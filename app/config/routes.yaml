@@ -1,0 +1,4 @@
+start:
+  path: /start
+  controller: App\Controller\Api\StartGameController:start
+  methods: POST

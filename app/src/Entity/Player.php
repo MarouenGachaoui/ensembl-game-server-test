@@ -137,4 +137,14 @@ abstract class Player
     {
         return ['x' => $this->getX(), 'y' => $this->getY()];
     }
+
+    /**
+     * Render the possible move actions.
+     *
+     * @return string[]
+     */
+    public static function getMoveActions(): array
+    {
+        return [self::MOVE_UP, self::MOVE_DOWN, self::MOVE_LEFT, self::MOVE_RIGHT];
+    }
 }

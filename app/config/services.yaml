@@ -35,11 +35,15 @@ services:
     App\Service\Api\StartGameService:
         bind:
             $numberOfSidePositions: '%env(APP_MAP_SIDE_POSITIONS)%'
+    App\Service\Api\MapService:
+        bind:
+            $expirationTtl: '%env(APP_REDIS_MAP_STATE_TTL)%'
+    App\Service\Api\ShootToTargetService:
+        bind:
+            $numberOfSidePositions: '%env(APP_MAP_SIDE_POSITIONS)%'
+            $maxHitsToFishTheGame: '%env(APP_MAP_NB_HITS_TO_FINISH)%'
     App\EventListener\SecurityListener:
         bind:
             $maxHitsToFishTheGame: '%env(APP_MAP_NB_HITS_TO_FINISH)%'
         tags:
             - { name: kernel.event_listener, event: kernel.request }
-    App\Service\Api\MapService:
-        bind:
-            $expirationTtl: '%env(APP_REDIS_MAP_STATE_TTL)%'

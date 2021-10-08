@@ -6,3 +6,7 @@ move:
   path: /move
   controller: App\Controller\Api\MoveShooterController:move
   methods: POST
+shoot:
+  path: /shoot
+  controller: App\Controller\Api\ShootToTargetController:shoot
+  methods: POST

@@ -16,7 +16,7 @@ class ExceptionListener
      *
      * @param ExceptionEvent $event
      */
-    public function onKernelException(ExceptionEvent $event)
+    public function onKernelException(ExceptionEvent $event): void
     {
         // You get the exception object from the received event
         $exception = $event->getThrowable();
